@@ -1,0 +1,20 @@
+[
+  {
+    "question": "1. George is French. ___ a French boy.",
+    "answers": [
+      {"value": "It is", "right": false},
+      {"value": "She is", "right": false},
+      {"value": "He is", "right": true},
+      {"value": "I am", "right": false}
+    ]
+  },
+  {
+    "question": "2. This is a notebook. Those ___ notebooks.",
+    "answers": [
+      {"value": "is", "right": false},
+      {"value": "am", "right": false},
+      {"value": "are", "right": true},
+      {"value": "be", "right": false}
+    ]
+  }
+]
