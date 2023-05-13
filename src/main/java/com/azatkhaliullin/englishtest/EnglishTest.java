@@ -1,15 +1,14 @@
 package com.azatkhaliullin.englishtest;
 
+import com.azatkhaliullin.englishtest.dto.Answer;
 import com.azatkhaliullin.englishtest.dto.Question;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -31,10 +30,9 @@ public class EnglishTest {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private final List<Question> questions;
     private int currentIndex;
-    @Transient
     private int level;
     private int score;
 
@@ -67,16 +65,21 @@ public class EnglishTest {
     }
 
     /**
-     * Increments the current index to move to the next question.
+     * Checks if the given answer is correct, updates the score and moves on to the next question.
+     *
+     * @param answer the answer object to be checked.
      */
-    public void incrementCurrentIndex() {
+    public void checkAnswer(Answer answer) {
+        if (answer.isRight()) {
+            calculateScore();
+        }
         currentIndex++;
     }
 
     /**
      * Calculates the score based on the number of correctly answered questions.
      */
-    public void calculateScore() {
+    private void calculateScore() {
         int[] scoreBoundaries = {6, 14, 29, 39, 50};
         int[] points = {1, 2, 3, 4, 5};
         for (int i = 0; i < scoreBoundaries.length; i++) {
@@ -104,6 +107,4 @@ public class EnglishTest {
         return level;
     }
 
-
 }
-

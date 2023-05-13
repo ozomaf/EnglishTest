@@ -34,7 +34,7 @@ public class EnglishTestController {
     @PostMapping("/question")
     public Optional<Question> getQuestion(@RequestParam Long idEnglishTest) {
         EnglishTest englishTest = englishTestRepo.getById(idEnglishTest);
-        return EnglishTestUtility.getNextQuestion(englishTest, englishTestRepo);
+        return englishTest.getNextQuestion();
     }
 
     @PostMapping("/answer")
@@ -42,7 +42,7 @@ public class EnglishTestController {
                             @RequestParam Long idAnswer) {
         EnglishTest englishTest = englishTestRepo.getById(idEnglishTest);
         Optional<Answer> optionalAnswer = answerRepo.getById(idAnswer);
-        optionalAnswer.ifPresent(answer -> EnglishTestUtility.checkAnswer(englishTest, answer));
+        optionalAnswer.ifPresent(englishTest::checkAnswer);
         englishTestRepo.save(englishTest);
     }
 
