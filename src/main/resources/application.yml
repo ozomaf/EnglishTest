@@ -3,3 +3,13 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  sql:
+    init:
+      data-locations: classpath:insertLevel.sql, classpath:insertQuestion.sql
+      mode: always
